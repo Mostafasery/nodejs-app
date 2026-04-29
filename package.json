@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/johnpapa/node-hello/issues"
   },
-  "homepage": "https://github.com/johnpapa/node-hello#readme"
+  "homepage": "https://github.com/johnpapa/node-hello#readme",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.2.1",
+    "globals": "^17.5.0"
+  }
 }
