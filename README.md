@@ -1,12 +1,27 @@
-## Node.js CI/CD Pipeline with Kubernetes Deployment
+# Node.js CI/CD Pipeline with Kubernetes Deployment & Monitoring
 
-This project demonstrates a complete CI/CD pipeline for a Node.js application using Docker, GitHub Actions, GHCR, Terraform, and Kubernetes.
+This project demonstrates a complete end-to-end DevOps pipeline for a Node.js application, including containerization, CI/CD automation, infrastructure provisioning, Kubernetes deployment, and centralized logging using New Relic.
 
-## Architecture
+---
 
-Developer → GitHub → GitHub Actions → Docker Image → GHCR → Terraform → Kubernetes → App
+## Architecture Overview
 
-## Setup
+Developer → GitHub → GitHub Actions → Docker Image → GHCR → Terraform → Kubernetes → Application → New Relic (Logs)
+
+---
+
+## Prerequisites
+
+- Node.js
+- Docker
+- Kubernetes (Docker Desktop / Minikube)
+- kubectl
+- Terraform
+- Helm
+
+---
+
+## Application Setup
 
 ```bash
 git clone https://github.com/YOUR_USERNAME/nodejs-app.git
@@ -15,6 +30,8 @@ npm install
 npm start
 ```
 
+---
+
 ## Docker
 
 ```bash
@@ -22,15 +39,20 @@ docker build -t nodejs-app .
 docker run -p 3000:3000 nodejs-app
 ```
 
-## CI/CD
+---
 
-Pipeline runs on push to main and:
-- installs dependencies
-- runs lint
-- builds Docker image
-- pushes to GHCR
+## CI/CD Pipeline
 
-## Deploy
+The pipeline runs on push to main branch and performs:
+- Install dependencies
+- Run linting
+- Build Docker image
+- Tag image (latest + commit SHA)
+- Push to GHCR
+
+---
+
+## Deployment (Terraform)
 
 ```bash
 cd terraform
@@ -38,33 +60,53 @@ terraform init
 terraform apply -auto-approve
 ```
 
-## Access
+---
+
+## Access the Application
 
 ```bash
 kubectl port-forward svc/nodejs-app-service 3000:80 -n nodejs-app
 ```
 
-Open http://localhost:3000
+Open: http://localhost:3000
 
-## Issues & Fixes
+---
 
-- Dockerfile not found → fixed naming
-- Git OneDrive issue → moved project
-- Missing lint → added ESLint
-- ESLint Node issue → used globals.node
-- Image uppercase → used lowercase
-- GHCR private → made public
-- Wrong kube context → switched to docker-desktop
-- Terraform variable → added default
+## Monitoring & Logging (New Relic)
 
-## Learnings
+### Install via Helm
 
-- CI should not modify code
-- Docker naming rules matter
-- Kubernetes needs accessible images
-- Terraform needs explicit config
+```bash
+helm repo add newrelic https://helm-charts.newrelic.com
+helm repo update
+
+helm upgrade --install newrelic-bundle newrelic/nri-bundle \
+  --namespace nodejs-app \
+  --set global.licenseKey=<YOUR_LICENSE_KEY> \
+  --set global.nrRegion=EU \
+  --set global.cluster="docker-desktop-nodejs-app" \
+  --set newrelic-logging.enabled=true \
+  --set kubeEvents.enabled=false
+```
+
+### View Logs
+
+Go to:
+https://one.newrelic.com → Logs
+
+---
+
+## Assumptions
+
+- Used Docker Desktop Kubernetes instead of cloud provider  
+- Used GHCR instead of Docker Hub  
+- Used Helm for monitoring setup  
+- Used port-forward instead of LoadBalancer  
+- Used latest tag for simplicity  
+- Minimal logging added for demo  
+
+---
 
 ## Author
 
 Mostafa Soliman
-
