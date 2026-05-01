@@ -22,9 +22,9 @@ Developer → GitHub → GitHub Actions → Docker Image → GHCR → Terraform 
 ---
 
 ## Docker
-Run Locally first:
-docker build -t nodejs-app .
-docker run -p 3000:3000 nodejs-app
+- Run Locally first:
+- docker build -t nodejs-app .
+- docker run -p 3000:3000 nodejs-app
 
 ---
 
@@ -49,9 +49,9 @@ The pipeline runs on push to main branch and performs:
 
 ## Access the Application
 
-kubectl port-forward svc/nodejs-app-service 3000:80 -n nodejs-app
+- kubectl port-forward svc/nodejs-app-service 3000:80 -n nodejs-app
 
-Open: http://localhost:3000
+- Open: http://localhost:3000
 
 ---
 
@@ -59,10 +59,10 @@ Open: http://localhost:3000
 
 ### Install via Helm
 
-helm repo add newrelic https://helm-charts.newrelic.com
-helm repo update
+- helm repo add newrelic https://helm-charts.newrelic.com
+- helm repo update
 ```
-helm upgrade --install newrelic-bundle newrelic/nri-bundle \
+- helm upgrade --install newrelic-bundle newrelic/nri-bundle \
   --namespace nodejs-app \
   --set global.licenseKey=<YOUR_LICENSE_KEY> \
   --set global.nrRegion=EU \
@@ -73,9 +73,9 @@ helm upgrade --install newrelic-bundle newrelic/nri-bundle \
 
 ### View Logs
 
-Go to:
-https://one.newrelic.com → Logs
-https://one.eu.newrelic.com/logger?account=8004007&duration=1800000&state=fc874668-3d3f-7546-cf49-b44c68263ec7
+- Go to:
+- https://one.newrelic.com → Logs
+- https://one.eu.newrelic.com/logger?account=8004007&duration=1800000&state=fc874668-3d3f-7546-cf49-b44c68263ec7
 ---
 
 ## Assumptions
