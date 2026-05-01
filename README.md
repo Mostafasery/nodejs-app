@@ -39,11 +39,11 @@ The pipeline runs on push to main branch and performs:
 
 ---
 
-## Deployment (Terraform)
+## Deployment (Terraform with K8s provider)
 
-cd terraform
-terraform init
-terraform apply -auto-approve
+- cd terraform
+- terraform init
+- terraform apply -auto-approve
 
 ---
 
@@ -75,7 +75,7 @@ helm upgrade --install newrelic-bundle newrelic/nri-bundle \
 
 Go to:
 https://one.newrelic.com → Logs
-
+https://one.eu.newrelic.com/logger?account=8004007&duration=1800000&state=fc874668-3d3f-7546-cf49-b44c68263ec7
 ---
 
 ## Assumptions
