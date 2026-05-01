@@ -14,30 +14,17 @@ Developer → GitHub → GitHub Actions → Docker Image → GHCR → Terraform 
 
 - Node.js
 - Docker
-- Kubernetes (Docker Desktop / Minikube)
+- Kubernetes (Docker Desktop)
 - kubectl
 - Terraform
 - Helm
 
 ---
 
-## Application Setup
-
-```bash
-git clone https://github.com/YOUR_USERNAME/nodejs-app.git
-cd nodejs-app
-npm install
-npm start
-```
-
----
-
 ## Docker
 
-```bash
 docker build -t nodejs-app .
 docker run -p 3000:3000 nodejs-app
-```
 
 ---
 
@@ -54,19 +41,15 @@ The pipeline runs on push to main branch and performs:
 
 ## Deployment (Terraform)
 
-```bash
 cd terraform
 terraform init
 terraform apply -auto-approve
-```
 
 ---
 
 ## Access the Application
 
-```bash
 kubectl port-forward svc/nodejs-app-service 3000:80 -n nodejs-app
-```
 
 Open: http://localhost:3000
 
@@ -76,10 +59,9 @@ Open: http://localhost:3000
 
 ### Install via Helm
 
-```bash
 helm repo add newrelic https://helm-charts.newrelic.com
 helm repo update
-
+```
 helm upgrade --install newrelic-bundle newrelic/nri-bundle \
   --namespace nodejs-app \
   --set global.licenseKey=<YOUR_LICENSE_KEY> \
@@ -87,7 +69,7 @@ helm upgrade --install newrelic-bundle newrelic/nri-bundle \
   --set global.cluster="docker-desktop-nodejs-app" \
   --set newrelic-logging.enabled=true \
   --set kubeEvents.enabled=false
-```
+
 
 ### View Logs
 
@@ -103,7 +85,7 @@ https://one.newrelic.com → Logs
 - Used Helm for monitoring setup  
 - Used port-forward instead of LoadBalancer  
 - Used latest tag for simplicity  
-- Minimal logging added for demo  
+- Add Minimal logging for demo  
 
 ---
 
