@@ -22,7 +22,7 @@ Developer → GitHub → GitHub Actions → Docker Image → GHCR → Terraform 
 ---
 
 ## Docker
-
+Run Locally first:
 docker build -t nodejs-app .
 docker run -p 3000:3000 nodejs-app
 
@@ -34,16 +34,16 @@ The pipeline runs on push to main branch and performs:
 - Install dependencies
 - Run linting
 - Build Docker image
-- Tag image (latest + commit SHA)
+- Tag image (latest)
 - Push to GHCR
 
 ---
 
 ## Deployment (Terraform with K8s provider)
 
-- cd terraform
 - terraform init
-- terraform apply -auto-approve
+- terraform plan
+- terraform apply -auto-approve 
 
 ---
 
