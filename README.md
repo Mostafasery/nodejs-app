@@ -14,30 +14,17 @@ Developer → GitHub → GitHub Actions → Docker Image → GHCR → Terraform 
 
 - Node.js
 - Docker
-- Kubernetes (Docker Desktop / Minikube)
+- Kubernetes (Docker Desktop)
 - kubectl
 - Terraform
 - Helm
 
 ---
 
-## Application Setup
-
-```bash
-git clone https://github.com/YOUR_USERNAME/nodejs-app.git
-cd nodejs-app
-npm install
-npm start
-```
-
----
-
 ## Docker
-
-```bash
-docker build -t nodejs-app .
-docker run -p 3000:3000 nodejs-app
-```
+- Run Locally first:
+- docker build -t nodejs-app .
+- docker run -p 3000:3000 nodejs-app
 
 ---
 
@@ -47,28 +34,24 @@ The pipeline runs on push to main branch and performs:
 - Install dependencies
 - Run linting
 - Build Docker image
-- Tag image (latest + commit SHA)
+- Tag image (latest)
 - Push to GHCR
 
 ---
 
-## Deployment (Terraform)
+## Deployment (Terraform with K8s provider)
 
-```bash
-cd terraform
-terraform init
-terraform apply -auto-approve
-```
+- terraform init
+- terraform plan
+- terraform apply -auto-approve 
 
 ---
 
 ## Access the Application
 
-```bash
-kubectl port-forward svc/nodejs-app-service 3000:80 -n nodejs-app
-```
+- kubectl port-forward svc/nodejs-app-service 3000:80 -n nodejs-app
 
-Open: http://localhost:3000
+- Open: http://localhost:3000
 
 ---
 
@@ -76,24 +59,23 @@ Open: http://localhost:3000
 
 ### Install via Helm
 
-```bash
-helm repo add newrelic https://helm-charts.newrelic.com
-helm repo update
-
-helm upgrade --install newrelic-bundle newrelic/nri-bundle \
+- helm repo add newrelic https://helm-charts.newrelic.com
+- helm repo update
+```
+- helm upgrade --install newrelic-bundle newrelic/nri-bundle \
   --namespace nodejs-app \
   --set global.licenseKey=<YOUR_LICENSE_KEY> \
   --set global.nrRegion=EU \
   --set global.cluster="docker-desktop-nodejs-app" \
   --set newrelic-logging.enabled=true \
   --set kubeEvents.enabled=false
-```
+
 
 ### View Logs
 
-Go to:
-https://one.newrelic.com → Logs
-
+- Go to:
+- https://one.newrelic.com → Logs
+- https://one.eu.newrelic.com/logger?account=8004007&duration=1800000&state=fc874668-3d3f-7546-cf49-b44c68263ec7
 ---
 
 ## Assumptions
@@ -103,7 +85,7 @@ https://one.newrelic.com → Logs
 - Used Helm for monitoring setup  
 - Used port-forward instead of LoadBalancer  
 - Used latest tag for simplicity  
-- Minimal logging added for demo  
+- Add Minimal logging for demo  
 
 ---
 
