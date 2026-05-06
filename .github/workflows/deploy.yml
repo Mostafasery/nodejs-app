@@ -44,9 +44,7 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -t $IMAGE_NAME:latest .
-          docker tag $IMAGE_NAME:latest $IMAGE_NAME:${{ github.sha }}
 
       - name: Push Docker image
-
         run: |
           docker push $IMAGE_NAME:latest
